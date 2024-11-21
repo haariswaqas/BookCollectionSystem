@@ -1,18 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database');
-
-// Define the Genre model
-const Genre = sequelize.define('Genre', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-});
+const Genre = require('./genre'); // Import the Genre model from the same folder
 
 // Define the Book model
 const Book = sequelize.define('Book', {
@@ -53,4 +41,4 @@ const Book = sequelize.define('Book', {
 Book.belongsTo(Genre, { foreignKey: 'genre_id' });
 Genre.hasMany(Book, { foreignKey: 'genre_id' });
 
-module.exports = { Book, Genre };
+module.exports = Book;

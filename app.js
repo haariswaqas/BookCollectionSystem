@@ -3,12 +3,13 @@ const dotenv = require('dotenv');
 const cors = require('cors'); // Import cors package
 const sequelize = require('./database');
 const bookRoutes = require('./routes/bookRoutes');
+const genreRoutes = require('./routes/genreRoutes'); // Import genreRoutes
 
 dotenv.config();
 
 const app = express();
 
-// Enable CORS for requests from http://localhost:3001
+// Enable CORS for requests from http://localhost:3000
 app.use(cors({ origin: 'http://localhost:3000' }));
 
 // Middleware
@@ -22,6 +23,7 @@ app.use((err, req, res, next) => {
 
 // Routes
 app.use('/api', bookRoutes);
+app.use('/api', genreRoutes); // Add genre routes
 
 // Health check endpoint
 app.get('/health', (req, res) => {
