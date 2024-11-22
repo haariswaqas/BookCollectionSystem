@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchBooks, deleteBook } from '../services/bookServices';
 import { fetchGenres } from '../services/genreServices';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const BookList = () => {
   const [books, setBooks] = useState([]);

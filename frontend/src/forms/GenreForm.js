@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { createOrUpdateGenre } from '../services/genreServices';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { createOrUpdateGenre, fetchGenreById } from '../services/genreServices';
+
 
 const GenreForm = () => {
+  const { id } = useParams(); // Fetch the ID from the URL params
   const [name, setName] = useState('');
   const [error, setError] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchGenre = async () => {
+      if (id) {
+        setIsEditing(true);
+        try {
+          const genre = await fetchGenreById(id); // Fetch genre details for editing
+          setName(genre.name);
+        } catch (err) {
+          setError('Failed to fetch genre details.');
+        }
+      }
+    };
+
+    fetchGenre();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createOrUpdateGenre({ name });
-      navigate('/genres');
+      await createOrUpdateGenre(id ? { id, name } : { name }); // Update or create
+      navigate('/genres'); // Redirect to genres list
     } catch (err) {
       setError(err.message);
     }
@@ -24,7 +42,9 @@ const GenreForm = () => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h2 className="card-title text-center mb-4">Add New Genre</h2>
+              <h2 className="card-title text-center mb-4">
+                {isEditing ? 'Edit Genre' : 'Add New Genre'}
+              </h2>
               {error && <div className="alert alert-danger">{error}</div>}
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -39,7 +59,7 @@ const GenreForm = () => {
                   />
                 </div>
                 <button type="submit" className="btn btn-primary w-100">
-                  Add Genre
+                  {isEditing ? 'Update Genre' : 'Add Genre'}
                 </button>
               </form>
             </div>

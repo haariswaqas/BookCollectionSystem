@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchGenres } from '../services/genreServices';
 import { createOrUpdateBook } from '../services/bookServices';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const BookForm = () => {
   const { id } = useParams();
