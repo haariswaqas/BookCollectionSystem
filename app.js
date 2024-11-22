@@ -30,7 +30,7 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'OK' });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const startServer = async () => {
     try {

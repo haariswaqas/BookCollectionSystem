@@ -32,6 +32,12 @@ const createGenre = async (req, res) => {
     const { name } = req.body;
 
     try {
+        // Check if genre with same name already exists
+        const existingGenre = await Genre.findOne({ where: { name } });
+        if (existingGenre) {
+            return res.status(400).json({ error: 'A genre with this name already exists' });
+        }
+
         const newGenre = await Genre.create({ name });
         res.status(201).json(newGenre);
     } catch (error) {

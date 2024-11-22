@@ -35,6 +35,10 @@ const Book = sequelize.define('Book', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    image: {  // New field for the image
+        type: DataTypes.STRING, // Store image URL or path
+        allowNull: true, // This can be true if the image is optional
+    },
 });
 
 // Establish associations
