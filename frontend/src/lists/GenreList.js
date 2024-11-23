@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchGenres } from '../services/genreServices'; // Importing the service
+import { fetchGenres, deleteGenre } from '../services/genreServices'; // Importing the services
 
 
 const GenreList = () => {
@@ -22,6 +22,15 @@ const GenreList = () => {
 
     fetchData();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteGenre(id);
+      setGenres(genres.filter(genre => genre.id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   if (loading) {
     return (
@@ -53,9 +62,17 @@ const GenreList = () => {
             <div className="card shadow-sm">
               <div className="card-body">
                 <h5 className="card-title">{genre.name}</h5>
-                <Link to={`/edit-genre/${genre.id}`} className="btn btn-warning">
-                  Edit
-                </Link>
+                <div className="d-flex gap-2">
+                  <Link to={`/edit-genre/${genre.id}`} className="btn btn-warning">
+                    Edit
+                  </Link>
+                  <button 
+                    onClick={() => handleDelete(genre.id)} 
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           </div>

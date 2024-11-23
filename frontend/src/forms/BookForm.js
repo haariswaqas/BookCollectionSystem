@@ -59,7 +59,7 @@ const BookForm = () => {
       const bookToSave = { ...formData };
       if (id) bookToSave.id = id;
       await createOrUpdateBook(bookToSave);
-      navigate('/books');
+      navigate('/view-books');
     } catch (err) {
       setError(err.message);
     }

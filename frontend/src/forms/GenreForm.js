@@ -30,7 +30,7 @@ const GenreForm = () => {
     e.preventDefault();
     try {
       await createOrUpdateGenre(id ? { id, name } : { name }); // Update or create
-      navigate('/genres'); // Redirect to genres list
+      navigate('/view-genres'); // Redirect to genres list
     } catch (err) {
       setError(err.message);
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import  BookList  from '../lists/BookList';
-import GenreList from '../lists/GenreList';
+
 
 const Home = () => {
   return (
@@ -18,32 +18,29 @@ const Home = () => {
             </Link>
           </div>
 
-          {/* Add Genre Button */}
-          <div className="col">
-            <Link to="/add-genre" className="text-decoration-none">
-              <button className="btn btn-success btn-lg w-100">Add Genre</button>
-            </Link>
-          </div>
-
           {/* Add Book Button */}
           <div className="col">
             <Link to="/add-book" className="text-decoration-none">
-              <button className="btn btn-info btn-lg w-100">Add Book</button>
+              <button className="btn btn-primary btn-lg w-100">Add Book</button>
             </Link>
           </div>
 
-   
+          {/* Add Genre Button */}
+          <div className="col">
+            <Link to="/add-genre" className="text-decoration-none">
+              <button className="btn btn-secondary btn-lg w-100">Add Genre</button>
+            </Link>
+          </div>
+
           {/* Manage Genres Button */}
           <div className="col">
             <Link to="/view-genres" className="text-decoration-none">
-              <button className="btn btn-dark btn-lg w-100">Manage Genres</button>
+              <button className="btn btn-secondary btn-lg w-100">View Genres</button>
             </Link>
           </div>
         </div>
       </div>
-      <div>
-      <GenreList />
-      </div>
+   
       <div>
       <BookList />
       </div>

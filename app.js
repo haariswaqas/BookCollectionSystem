@@ -4,7 +4,6 @@ const cors = require('cors'); // Import cors package
 const sequelize = require('./database');
 const bookRoutes = require('./routes/bookRoutes');
 const genreRoutes = require('./routes/genreRoutes'); // Import genreRoutes
-
 dotenv.config();
 
 const app = express();
