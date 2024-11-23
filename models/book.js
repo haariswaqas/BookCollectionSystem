@@ -17,6 +17,10 @@ const Book = sequelize.define('Book', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
     price: {
         type: DataTypes.FLOAT,
         allowNull: true,

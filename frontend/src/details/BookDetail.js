@@ -76,6 +76,18 @@ const BookDetail = () => {
                   <span className="badge bg-primary me-2">${book.price}</span>
                   <span className="badge bg-success">{book.copies_left} copies available</span>
                 </p>
+                {book.description && (
+                  <div className="mt-4 p-4 bg-light rounded-3 border">
+                    <h5 className="card-subtitle mb-3 text-primary">Description</h5>
+                    <p className="card-text lead" style={{ 
+                      lineHeight: '1.8',
+                      textAlign: 'justify',
+                      color: '#4a4a4a'
+                    }}>
+                      {book.description}
+                    </p>
+                  </div>
+                )}
               </div>
               <div className="mt-auto">
                 <div className="d-flex gap-3 justify-content-end">

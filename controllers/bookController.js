@@ -43,7 +43,7 @@ const getBook = async (req, res) => {
 
 // Create a new book
 const createBook = async (req, res) => {
-    const { title, author, price, genre_id, copies_left, image } = req.body;
+    const { title, author, price, genre_id, copies_left, image, description } = req.body;
 
     try {
         // Check if book with same title and author already exists
@@ -62,6 +62,7 @@ const createBook = async (req, res) => {
             title,
             author,
             price,
+            description,
             genre_id,
             copies_left,
             image
@@ -76,7 +77,7 @@ const createBook = async (req, res) => {
 // Update an existing book
 const updateBook = async (req, res) => {
     const { id } = req.params;
-    const { title, author, price, genre_id, copies_left, image } = req.body;
+    const { title, author, price, genre_id, copies_left, image, description } = req.body;
 
     try {
         const book = await Book.findByPk(id);
@@ -90,6 +91,7 @@ const updateBook = async (req, res) => {
         if (genre_id !== undefined) book.genre_id = genre_id;
         if (copies_left !== undefined) book.copies_left = copies_left;
         if (image !== undefined) book.image = image;
+        if (description !== undefined) book.description = description;
 
         await book.save();
         res.json(book);

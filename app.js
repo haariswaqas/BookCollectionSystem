@@ -45,8 +45,11 @@ const startServer = async () => {
     try {
         await sequelize.authenticate();
         console.log('Database connected successfully');
+
+        // Synchronize models with database schema
+        await sequelize.sync({ alter: true }); // `alter: true` updates the schema without dropping data
         
-        await sequelize.sync();
+
         console.log('Database models synchronized');
         
         app.listen(PORT, () => {

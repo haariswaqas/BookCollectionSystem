@@ -12,7 +12,8 @@ const BookForm = () => {
     price: '',
     genre_id: '',
     copies_left: '',
-    image: ''
+    image: '',
+    description: ''
   });
   const [genres, setGenres] = useState([]);
   const [error, setError] = useState(null);
@@ -145,6 +146,18 @@ const BookForm = () => {
                     value={formData.copies_left}
                     onChange={handleChange}
                     required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="description" className="form-label">Description:</label>
+                  <textarea
+                    className="form-control"
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows="3"
                   />
                 </div>
 
