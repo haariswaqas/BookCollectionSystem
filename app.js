@@ -1,9 +1,11 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors'); // Import cors package
+const path = require('path'); // Import path for serving React files
 const sequelize = require('./database');
 const bookRoutes = require('./routes/bookRoutes');
 const genreRoutes = require('./routes/genreRoutes'); // Import genreRoutes
+
 dotenv.config();
 
 const app = express();
@@ -14,15 +16,23 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 // Middleware
 app.use(express.json());
 
+// Serve React static files
+app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Something broke!' });
 });
 
-// Routes
+// API Routes
 app.use('/api', bookRoutes);
 app.use('/api', genreRoutes); // Add genre routes
+
+// React fallback route (for SPA navigation)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {
