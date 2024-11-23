@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS + Popper.js
+
 
 
 import Navbar from './essentials/Navbar';
