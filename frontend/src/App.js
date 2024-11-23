@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS + Popper.js
 
 
 import Navbar from './essentials/Navbar';
+import Footer from './essentials/Footer';
 import Home from './home/Home';
 import BookForm from './forms/BookForm';
 import BookDetail from './details/BookDetail';
@@ -32,6 +33,11 @@ const App = () => {
 
 
   </Router>
+  <div style={{ marginTop: '550px' }}>
+  <Footer />
+
+  </div>
+
 
 
 
