@@ -19,9 +19,9 @@ app.use(cors(corsOptions));
 // Middleware
 app.use(express.json());
 
-// Serve static files from the React build folder
+// Serve static files from the public directory
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+    app.use(express.static(path.join(__dirname, 'public')));
 }
 
 // API Routes
@@ -31,7 +31,7 @@ app.use('/api', genreRoutes);
 // React fallback route (for SPA navigation)
 if (process.env.NODE_ENV === 'production') {
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
     });
 }
 
