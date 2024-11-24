@@ -2,22 +2,43 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors'); // Import cors package
 const path = require('path'); // Import path for serving React files
-const sequelize = require('./database');
-const bookRoutes = require('./routes/bookRoutes');
-const genreRoutes = require('./routes/genreRoutes'); // Import genreRoutes
+const sequelize = require('./database'); // Sequelize for database connection
+const bookRoutes = require('./routes/bookRoutes'); // Import book routes
+const genreRoutes = require('./routes/genreRoutes'); // Import genre routes
 
-dotenv.config();
+dotenv.config(); // Load environment variables from .env
 
 const app = express();
 
-// Enable CORS for requests from http://localhost:3000
-app.use(cors({ origin: 'http://localhost:3000' }));
+// Enable CORS
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' ? '*' : 'http://localhost:3000',
+};
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());
 
-// Serve React static files
-app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+// Serve static files from the React build folder
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+}
+
+// API Routes
+app.use('/api', bookRoutes);
+app.use('/api', genreRoutes);
+
+// React fallback route (for SPA navigation)
+if (process.env.NODE_ENV === 'production') {
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
+    });
+}
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK' });
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -25,33 +46,19 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Something broke!' });
 });
 
-// API Routes
-app.use('/api', bookRoutes);
-app.use('/api', genreRoutes); // Add genre routes
-
-// React fallback route (for SPA navigation)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
-});
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'OK' });
-});
-
 const PORT = process.env.PORT || 3001;
 
 const startServer = async () => {
     try {
+        // Connect to the database
         await sequelize.authenticate();
         console.log('Database connected successfully');
 
-        // Synchronize models with database schema
-        await sequelize.sync({ alter: true }); // `alter: true` updates the schema without dropping data
-        
-
+        // Synchronize models with the database schema
+        await sequelize.sync({ alter: true }); // Update the schema without dropping data
         console.log('Database models synchronized');
-        
+
+        // Start the Express server
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         });
